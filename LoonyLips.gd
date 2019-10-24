@@ -1,16 +1,32 @@
 extends Control
 
 var player_words = []
-var prompts = ["a name", "a noun", "an adverb", "an adjective"]
-var story = "Once upon a time %s ate %s flavoured sandwich which made him feel all %s. It was a %s day."
+var template = [
+		{
+		"prompts" : ["a name", "a noun", "an adverb", "an adjective"],
+		"story" : "Once upon a time %s ate %s flavoured sandwich which made him feel all %s. It was a %s day."
+		},
+		{
+		"prompts" : ["a noun", "a name", "an adverb", "an adjective"],
+		"story" : "One day %s fell on %s's foot %s. What a %s day!"
+		}
+		]
+
+var current_story
 
 onready var PlayerText = $VBoxContainer/HBoxContainer/PlayerText
 onready var DisplayText = $VBoxContainer/DisplayText
 
 func _ready():
+	set_current_story()
 	DisplayText.text = "Welcome to Loony Lips! We're going to tell a story and have wonderous time.\n"
 	check_player_words_length()
 	PlayerText.grab_focus()
+
+
+func set_current_story():
+	randomize()
+	current_story = template[randi() % template.size()]
 
 
 func _on_PlayerText_text_entered(new_text):
@@ -32,7 +48,7 @@ func add_to_player_words():
 
 
 func is_story_done():
-	return player_words.size() == prompts.size()
+	return player_words.size() == current_story.prompts.size()
 
 
 func check_player_words_length():
@@ -43,11 +59,11 @@ func check_player_words_length():
 
 
 func tell_story():
-	DisplayText.text = story % player_words
+	DisplayText.text = current_story.story % player_words
 
 
 func prompt_player():
-	DisplayText.text += "May I have " + prompts[player_words.size()] + " please?"
+	DisplayText.text += "May I have " + current_story.prompts[player_words.size()] + " please?"
 
 
 func end_game():
