@@ -10,6 +10,7 @@ onready var DisplayText = $VBoxContainer/DisplayText
 func _ready():
 	DisplayText.text = "Welcome to Loony Lips! We're going to tell a story and have wonderous time.\n"
 	check_player_words_length()
+	PlayerText.grab_focus()
 
 
 func _on_PlayerText_text_entered(new_text):
@@ -17,7 +18,10 @@ func _on_PlayerText_text_entered(new_text):
 
 
 func _on_TextureButton_pressed():
-	add_to_player_words()
+	if is_story_done():
+		get_tree().reload_current_scene()
+	else:
+		add_to_player_words()
 
 
 func add_to_player_words():
@@ -33,7 +37,7 @@ func is_story_done():
 
 func check_player_words_length():
 	if is_story_done():
-		tell_story()
+		end_game()
 	else:
 		prompt_player()
 
@@ -41,5 +45,12 @@ func check_player_words_length():
 func tell_story():
 	DisplayText.text = story % player_words
 
+
 func prompt_player():
 	DisplayText.text += "May I have " + prompts[player_words.size()] + " please?"
+
+
+func end_game():
+	PlayerText.queue_free()
+	$VBoxContainer/HBoxContainer/ButtonLabel.text = "Again"
+	tell_story()

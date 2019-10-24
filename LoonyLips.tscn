@@ -52,6 +52,7 @@ margin_top = 599.0
 margin_right = 1232.0
 margin_bottom = 672.0
 custom_constants/separation = 12
+alignment = 2
 
 [node name="PlayerText" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
 margin_right = 1077.0
@@ -68,7 +69,7 @@ texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 expand = true
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="ButtonLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
 margin_left = 1174.0
 margin_top = 5.0
 margin_right = 1232.0
