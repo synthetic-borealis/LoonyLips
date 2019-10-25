@@ -1,21 +1,6 @@
 extends Control
 
 var player_words = []
-#var template = [
-#		{
-#		"prompts" : ["a name", "a noun", "an adverb", "an adjective"],
-#		"story" : "Once upon a time %s ate %s flavoured sandwich which made him feel all %s. It was a %s day."
-#		},
-#		{
-#		"prompts" : ["a noun", "a name", "an adverb", "an adjective"],
-#		"story" : "One day %s fell on %s's foot %s. What a %s day!"
-#		},
-#		{
-#			"story" : "If you wish to %s a %s, you should %s talk to %s first and ask for approval."
-#			"prompts" : ["a verb", "a noun", "an adverb", "a name"]
-#		}
-#		]
-
 var current_story = {}
 
 onready var PlayerText = $VBoxContainer/HBoxContainer/PlayerText
@@ -30,11 +15,23 @@ func _ready():
 
 func set_current_story():
 	randomize()
-	var stories = $Storybook.get_child_count()
-	var selected_story = randi() % stories
-	current_story.prompts = $Storybook.get_child(selected_story).prompts
-	current_story.story = $Storybook.get_child(selected_story).story
+	var stories = get_from_json("StoryBook.json")
+	current_story = stories[randi() % stories.size()]
+	
+#	var stories = $Storybook.get_child_count()
+#	var selected_story = randi() % stories
+#	current_story.prompts = $Storybook.get_child(selected_story).prompts
+#	current_story.story = $Storybook.get_child(selected_story).story
 #	current_story = template[randi() % template.size()]
+
+
+func get_from_json(filename):
+	var file = File.new()
+	file.open(filename, File.READ)
+	var text = file.get_as_text()
+	var data =  parse_json(text)
+	file.close()
+	return data
 
 
 func _on_PlayerText_text_entered(new_text):

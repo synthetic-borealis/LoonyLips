@@ -1,0 +1,14 @@
+[
+    {
+        "prompts" : ["a name", "a noun", "an adverb", "an adjective"],
+        "story" : "Once upon a time %s ate %s flavoured sandwich which made him feel all %s. It was a %s day."
+    },
+    {
+        "prompts" : ["a noun", "a name", "an adverb", "an adjective"],
+        "story" : "One day %s fell on %s's foot %s. What a %s day!"
+    },
+    {
+        "story" : "If you wish to %s a %s, you should %s talk to %s first and ask for approval.",
+        "prompts" : ["a verb", "a noun", "an adverb", "a name"]
+    }
+]
